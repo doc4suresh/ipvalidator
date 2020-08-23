@@ -1,177 +1,305 @@
-<html>
-<div th:fragment="ip-validator-modal">
 
-	<!--IP-Validator Modal -->
-	<div class="modal fade ip-validator-modal-lg" tabindex="-1"
-		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<img src="/img/form-icon/firewall.png" alt="...">
-					<h5 class="modal-title" id="exampleModalLabel">Firewall
-						Request</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form th:action="@{/addFirewall}" method="POST">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="/img/favicons/favicon.png">
+
+<title>H Cloud</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<a class="navbar-brand" href="#"><img alt=""
+			src="/img/IHiS_Logo-72dpi_alpha.png"
+			style="height: 40px; width: 80px;"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarsExampleDefault"
+			aria-controls="navbarsExampleDefault" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+				<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+				</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="http://example.com"
+					id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">Dropdown</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown01">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a> <a
+							class="dropdown-item" href="#">Something else here</a>
+					</div></li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search"
+					aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
+	</nav>
+
+	<br />
+	<main role="main">
+
+
+		<div class="container">
+			<div class="alert alert-secondary" role="alert">
+				<a href="/">Home</a>><a href="/Request">Firewall Request</a>
+			</div>
+			<!-- Example row of columns -->
+			<div class="row">
+				<div class="col-md-12">
+					<form class='card p-3 bg-light' action="/addFirewallRule" method="POST">
 						<div class="form-group">
-							<label for="requestBy" class="col-form-label col-form-label-sm">Raise
-								this request on behalf of</label> <select
-								class="form-control form-control-sm" id="requestBy"
-								name="requestBy" required>
-								<option>Name</option>
-								<option>Name</option>
-								<option>Name</option>
-								<option>Name</option>
-								<option>Name</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="exampleFormControlInput1"
-								class="col-form-label col-form-label-sm">Summary</label> <input
-								type="text" class="form-control form-control-sm"
-								id="exampleFormControlInput1"
-								placeholder="Type the ticket summary here">
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="serialNum" class="col-form-label col-form-label-sm">Serial
-									Number</label> <input type="text" class="form-control form-control-sm"
-									id="serialNum">
+
+							<div class="form-row">
+
+								<div class="form-group col-md-6">
+									<label for="action" class="col-form-label col-form-label-sm">Action</label>
+									<select class="form-control form-control-sm" id="action"
+										name="action" required>
+										<option>New</option>
+										<option>Delete</option>
+										<option>Amend</option>
+										<option>Disable</option>
+										<option>Enable</option>
+									</select>
+								</div>
 							</div>
-							<div class="form-group col-md-6">
-								<label for="action" class="col-form-label col-form-label-sm">Action</label>
-								<select class="form-control form-control-sm" id="action"
-									name="action" required>
-									<option>New</option>
-									<option>Delete</option>
-									<option>Amend</option>
-									<option>Disable</option>
-									<option>Enable</option>
-								</select>
+
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="sourceHostname"
+										class="col-form-label col-form-label-sm">Source
+										Hostname</label> <small id="SourceOptionalInline" class="text-muted">(Optional)</small>
+									<input type="text" class="form-control form-control-sm"
+										th:value="${firewall.sourceHostname}" id="sourceHostname"
+										name="sourceHostname" placeholder="Source Hostname">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="sourceIp" class="col-form-label col-form-label-sm">Source
+										IP / Mask</label> <input type="text"
+										class="form-control form-control-sm"
+										th:value="${firewall.sourceIp}" id="sourceIp" name="sourceIp"
+										placeholder="Source IP or Source IP/Mask"
+										pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$|([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/(3[0-2]|[1-2]\d|\d)$"
+										title="Enter valid IPv4 addrss Ex: 127.0.0.1 OR 127.0.0.1/24">
+
+								</div>
+								<div class="form-group col-md-4">
+									<label for="sourceNatIp"
+										class="col-form-label col-form-label-sm">Source NAT IP</label>
+									<input type="text" class="form-control form-control-sm"
+										th:value="${firewall.sourceNatIp}" id="sourceNatIp"
+										name="sourceNatIp"
+										placeholder="Applicable if NAT is required only">
+								</div>
 							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="sourceHostname"
-									class="col-form-label col-form-label-sm">Source
-									Hostname</label> <small id="SourceOptionalInline" class="text-muted">(Optional)</small>
-								<input type="text" class="form-control form-control-sm"
-									th:value="${firewall.sourceHostname}" id="sourceHostname"
-									name="sourceHostname" placeholder="Source Hostname">
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="desHostname"
+										class="col-form-label col-form-label-sm">Destination
+										Hostname</label> <small id="destinationOptionalInline"
+										class="text-muted">(Optional)</small> <input type="text"
+										class="form-control form-control-sm"
+										th:value="${firewall.desHostname}" id="desHostname"
+										name="desHostname" placeholder="Destination Hostname">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="desIp" class="col-form-label col-form-label-sm">Destination
+										IP / Mask</label> <input type="text"
+										class="form-control form-control-sm"
+										th:value="${firewall.desIp}" id="desIp" name="desIp"
+										placeholder="Destination IP / Mask"
+										pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$|([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/(3[0-2]|[1-2]\d|\d)$"
+										title="Enter valid IPv4 addrss Ex: 127.0.0.1 OR 127.0.0.1/24">
+								</div>
+								<div class="form-group col-md-1">
+									<label for="desPort" class="col-form-label col-form-label-sm">Protocol</label>
+									<input type="text" class="form-control form-control-sm"
+										th:value="${firewall.desPort}" id="desPort" name="desPort"
+										placeholder="indicate UDP or TC" pattern="[0-9]+"
+										title="Enter valid port number">
+								</div>
+								<div class="form-group col-md-1">
+									<label for="desPort" class="col-form-label col-form-label-sm">
+										Port</label> <input type="text" class="form-control form-control-sm"
+										th:value="${firewall.desPort}" id="desPort" name="desPort"
+										placeholder="indicate UDP or TC" pattern="[0-9]+"
+										title="Enter valid port number">
+								</div>
+								<div class="form-group col-md-2">
+									<label for="ruleAction"
+										class="col-form-label col-form-label-sm">Rule Action</label> <select
+										class="form-control form-control-sm" id="ruleAction"
+										name="ruleAction">
+										<option>Allow</option>
+										<option>Deny</option>
+									</select>
+								</div>
 							</div>
-							<div class="form-group col-md-4">
-								<label for="sourceIp" class="col-form-label col-form-label-sm">Source
-									IP / Mask</label> <input type="text"
-									class="form-control form-control-sm"
-									th:value="${firewall.sourceIp}" id="sourceIp" name="sourceIp"
-									placeholder="Source IP or Source IP/Mask"
-									pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$|([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/(3[0-2]|[1-2]\d|\d)$"
-									title="Enter valid IPv4 addrss Ex: 127.0.0.1 OR 127.0.0.1/24">
+
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="description"
+										class="col-form-label col-form-label-sm">Purpose and
+										Description</label>
+									<textarea class="form-control form-control-sm"
+										style="min-width: 100%" th:value="${firewall.description}"
+										id="description" name="description"></textarea>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="validity" class="col-form-label col-form-label-sm">Validity</label>
+									<select class="form-control form-control-sm" id="validity"
+										name="validity">
+										<option>Permanent</option>
+										<option>Till Date</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="tillDate" class="col-form-label col-form-label-sm">Temporary
+										Till date</label> <input type="date"
+										class="form-control form-control-sm"
+										th:value="${firewall.tillDate}" id="tillDate" name="tillDate"
+										min="2020-01-01" max="2050-12-31">
+								</div>
 
 							</div>
-							<div class="form-group col-md-4">
-								<label for="sourceNatIp"
-									class="col-form-label col-form-label-sm">Source NAT IP</label>
-								<input type="text" class="form-control form-control-sm"
-									th:value="${firewall.sourceNatIp}" id="sourceNatIp"
-									name="sourceNatIp"
-									placeholder="Applicable if NAT is required only">
+
+
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Add Rule</button>
 							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="desHostname"
-									class="col-form-label col-form-label-sm">Destination
-									Hostname</label> <small id="destinationOptionalInline"
-									class="text-muted">(Optional)</small> <input type="text"
-									class="form-control form-control-sm"
-									th:value="${firewall.desHostname}" id="desHostname"
-									name="desHostname" placeholder="Destination Hostname">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="desIp" class="col-form-label col-form-label-sm">Destination
-									IP / Mask</label> <input type="text"
-									class="form-control form-control-sm"
-									th:value="${firewall.desIp}" id="desIp" name="desIp"
-									placeholder="Destination IP / Mask"
-									pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$|([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/(3[0-2]|[1-2]\d|\d)$"
-									title="Enter valid IPv4 addrss Ex: 127.0.0.1 OR 127.0.0.1/24">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="desPort" class="col-form-label col-form-label-sm">Destination
-									Port</label> <input type="text" class="form-control form-control-sm"
-									th:value="${firewall.desPort}" id="desPort" name="desPort"
-									placeholder="indicate UDP or TC" pattern="[0-9]+"
-									title="Enter valid port number">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="destinationNATIP"
-									class="col-form-label col-form-label-sm">Destination
-									NAT IP</label> <input type="text" class="form-control form-control-sm"
-									th:value="${firewall.desNatIp}" id="desNatIp" name="desNatIp"
-									placeholder="Applicable if NAT is required only">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="ruleAction" class="col-form-label col-form-label-sm">Rule
-									Action</label> <select class="form-control form-control-sm"
-									id="ruleAction" name="ruleAction">
-									<option>Allow</option>
-									<option>Deny</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="description" class="col-form-label col-form-label-sm">Purpose
-								and Description</label>
-							<textarea class="form-control form-control-sm"
-								style="min-width: 100%" th:value="${firewall.description}"
-								id="description" name="description"></textarea>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="validity" class="col-form-label col-form-label-sm">Validity</label>
-								<select class="form-control form-control-sm" id="validity"
-									name="validity">
-									<option>Permanent</option>
-									<option>Till Date</option>
-								</select>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="tillDate" class="col-form-label col-form-label-sm">Temporary
-									Till date</label> <input type="date"
-									class="form-control form-control-sm"
-									th:value="${firewall.tillDate}" id="tillDate" name="tillDate"
-									min="2020-01-01" max="2050-12-31">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="remarks" class="col-form-label col-form-label-sm">Remarks</label>
-							<textarea class="form-control form-control-sm"
-								style="min-width: 100%" th:value="${firewall.remarks}"
-								id="remarks" name="remarks"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="justification"
-								class="col-form-label col-form-label-sm">Request
-								Justification</label>
-							<textarea class="form-control form-control-sm"
-								style="min-width: 100%" th:value="${firewall.justification}"
-								id="justification" name="justification"></textarea>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">Validate</button>
 						</div>
 					</form>
+
+					<br />
+					<div class="col-md-12">
+						<table class="table table-bordered" style="font-size: 11px;">
+							<thead>
+								<tr>
+									<th scope="col" rowspan="2">S/N</th>
+									<th scope="col" rowspan="2">Action</th>
+									<th scope="col" colspan="3"><center>Source</center></th>
+									<th scope="col" colspan="5"><center>Destination</center></th>
+									<th scope="col" rowspan="2">Rule Action</th>
+									<th scope="col" rowspan="2">Purpose and Description</th>
+									<th scope="col" rowspan="2">Validity</th>
+									<th scope="col" rowspan="2">Remarks</th>
+									<th scope="col" rowspan="2">Review Status</th>
+									<th scope="col" rowspan="2"></th>
+								</tr>
+								<tr>
+									<th scope="col">Source Host Name</th>
+									<th scope="col">Source IP / Mask</th>
+									<th scope="col">Source Nat IP</th>
+
+									<th scope="col">Destination Host Name</th>
+									<th scope="col">Destination IP / Mask</th>
+									<th scope="col">Protocol</th>
+									<th scope="col">Port</th>
+									<th scope="col">Destination Nat IP</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="fr : ${FirewallsRules}">
+                                <td th:text="${fr.serialNo}"></td>
+                                <td th:text="${fr.action}"></td>
+                                <td th:text="${fr.sourceHostname}"></td>
+                                <td th:text="${fr.sourceIp}"></td>
+                                <td th:text="${fr.sourceNatIp}"></td>
+                                <td th:text="${fr.desHostname}"></td>
+                                <td th:text="${fr.desIp}"></td>
+                                <td th:text="${fr.desProtocol}"></td>
+                                <td th:text="${fr.desPort}"></td>
+                                <td></td>
+                                <td th:text="${fr.ruleAction}"></td>
+                                <td th:text="${fr.description}"></td>
+                                <td th:text="${fr.validity}"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+							</tbody>
+						</table>
+					</div>
+
 				</div>
 			</div>
 		</div>
-	</div>
-	
-</div>
+
+
+
+
+
+		<hr>
+		<!-- /container -->
+
+
+
+
+
+	</main>
+
+	<footer class="container">
+		<p>&copy; Company 2017-2018</p>
+	</footer>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/js/vendor/jquery-slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="/js/vendor/jquery-slim.min.js"><\/script>')
+	</script>
+	<script src="/js/vendor/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
+	<!-- script for disable paste dates for till date -->
+	<script type="text/javascript">
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd
+		}
+		if (mm < 10) {
+			mm = '0' + mm
+		}
+
+		today = yyyy + '-' + mm + '-' + dd;
+		document.getElementById("tillDate").setAttribute("min", today);
+	</script>
+
+</body>
 </html>

@@ -23,13 +23,27 @@ public class HomeController {
 	@Autowired
 	private FirewallService firewallService;
 	
+	
 	@Autowired
 	private JiraService jiraService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
 
-		return "login";
+		//return "login";
+		
+		Firewall firewall = new Firewall();
+		model.addAttribute("firewall", firewall);
+		
+		return "index";
+	}
+	
+	@RequestMapping(value = "/Request1", method = RequestMethod.GET)
+	public String requestModal(Model model) {
+
+		Firewall firewall = new Firewall();
+		model.addAttribute("firewall", firewall);
+		return "requestModal";
 	}
 	
 	@RequestMapping(value = "/Home", method = RequestMethod.POST)
@@ -53,4 +67,5 @@ public class HomeController {
 		
 		return "index";
 	}
+	
 }
