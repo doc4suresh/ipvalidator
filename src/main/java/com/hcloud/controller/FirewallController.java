@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.hcloud.model.Firewall;
+import com.hcloud.model.FirewallRule;
 import com.hcloud.model.FirewallRule;
 import com.hcloud.service.FirewallRuleService;
 
@@ -39,7 +39,7 @@ public class FirewallController {
 		 List<FirewallRule> list = firewallRuleService.getAllFirewallRules();
 		 
 	     model.addAttribute("FirewallsRules", list);
-	     Firewall firewall = new Firewall();
+	     FirewallRule firewall = new FirewallRule();
 			model.addAttribute("firewall", firewall);
 
 	     return "requestModal";

@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "firewall_rules")
+@Table(name = "firewall_rule")
 public class FirewallRule {
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -37,23 +36,35 @@ public class FirewallRule {
 	@Column(name = "des_ip")
 	private String desIp;
 
+	@Column(name = "des_protocal")
+	private String desProtocal;
+
 	@Column(name = "des_port")
 	private int desPort;
 
-	@Column(name = "des_protocol")
-	private String desProtocol;
-	
 	@Column(name = "rule_action")
 	private String ruleAction;
 
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "request_by")
+	private String requestBy;
+
+	@Column(name = "approved_by")
+	private String approvedBy;
+
 	@Column(name = "validity")
 	private String validity;
 
 	@Column(name = "till_date")
 	private Date tillDate;
+
+	@Column(name = "remarks")
+	private String remarks;
+
+	@Column(name = "justification")
+	private String justification;
 
 	public long getSerialNo() {
 		return serialNo;
@@ -111,20 +122,20 @@ public class FirewallRule {
 		this.desIp = desIp;
 	}
 
+	public String getDesProtocal() {
+		return desProtocal;
+	}
+
+	public void setDesProtocal(String desProtocal) {
+		this.desProtocal = desProtocal;
+	}
+
 	public int getDesPort() {
 		return desPort;
 	}
 
 	public void setDesPort(int desPort) {
 		this.desPort = desPort;
-	}
-
-	public String getDesProtocol() {
-		return desProtocol;
-	}
-
-	public void setDesProtocol(String desProtocol) {
-		this.desProtocol = desProtocol;
 	}
 
 	public String getRuleAction() {
@@ -143,6 +154,22 @@ public class FirewallRule {
 		this.description = description;
 	}
 
+	public String getRequestBy() {
+		return requestBy;
+	}
+
+	public void setRequestBy(String requestBy) {
+		this.requestBy = requestBy;
+	}
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	public String getValidity() {
 		return validity;
 	}
@@ -158,6 +185,20 @@ public class FirewallRule {
 	public void setTillDate(Date tillDate) {
 		this.tillDate = tillDate;
 	}
-	
-	
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
 }
