@@ -4,9 +4,12 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -65,6 +68,10 @@ public class FirewallRule {
 
 	@Column(name = "justification")
 	private String justification;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_id", referencedColumnName = "request_id")
+    private FirewallRequest firewallRequest;
 
 	public long getSerialNo() {
 		return serialNo;
@@ -201,4 +208,13 @@ public class FirewallRule {
 	public void setJustification(String justification) {
 		this.justification = justification;
 	}
+
+	public FirewallRequest getFirewallRequest() {
+		return firewallRequest;
+	}
+
+	public void setFirewallRequest(FirewallRequest firewallRequest) {
+		this.firewallRequest = firewallRequest;
+	}
+	
 }

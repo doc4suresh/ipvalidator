@@ -181,7 +181,7 @@
 								<div class="form-group col-md-4">
 									<label for="validity" class="col-form-label col-form-label-sm">Validity</label>
 									<select class="form-control form-control-sm" id="validity"
-										name="validity" onchange="onChangeValidity()">
+										name="validity">
 										<option>Permanent</option>
 										<option>Till Date</option>
 									</select>
@@ -191,7 +191,7 @@
 										Till date</label> <input type="date"
 										class="form-control form-control-sm"
 										th:value="${firewall.tillDate}" id="tillDate" name="tillDate"
-										min="2020-01-01" max="2050-12-31" disabled>
+										min="2020-01-01" max="2050-12-31">
 								</div>
 
 							</div>
@@ -258,15 +258,6 @@
 							</tr>
 						</tbody>
 					</table>
-					
-					<div>
-					 <form action="/saveRequest" method="POST" style="float: right;">
-					 	<button type="submit" class="btn btn-primary"
-								style="float: right;">Submit Request</button>
-					 </form>
-					</div>
-					<br><br><br>
-					
 				</div>
 			</div>
 		</div>
@@ -304,18 +295,6 @@
 
 		today = yyyy + '-' + mm + '-' + dd;
 		document.getElementById("tillDate").setAttribute("min", today);
-		
-		
-		function onChangeValidity(){
-			
-			var validity=document.getElementById("validity").value;
-			
-			if(validity=='Permanent'){
-				document.getElementById("tillDate").disabled = true;
-			}else{			
-				document.getElementById("tillDate").disabled = false;
-			}
-		}
 	</script>
 
 </body>

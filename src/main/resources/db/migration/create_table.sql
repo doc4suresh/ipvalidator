@@ -1,25 +1,12 @@
 CREATE TABLE firewall_request(
-	serial_no serial PRIMARY KEY,
-	action VARCHAR(255),
-	source_hostname VARCHAR(255),
-	source_ip VARCHAR(255),
-	source_nat_ip VARCHAR(255),
-	des_hostname VARCHAR(255),
-	des_ip VARCHAR(255),
-	des_port VARCHAR(255),
-	des_nat_ip VARCHAR(255),
-	rule_action VARCHAR(255),
-	description VARCHAR(255),
+	request_id serial PRIMARY KEY,
 	request_by VARCHAR(255),
-	approved_by VARCHAR(255),
-	validity VARCHAR(255),
-	till_date DATE,
-	remarks VARCHAR(255),
-	justification VARCHAR(255),
+	approved_by VARCHAR(255)
 );
 
-CREATE TABLE firewall_rules(
+CREATE TABLE firewall_rule(
 	serial_no serial PRIMARY KEY,
+	request_id INT,
 	action VARCHAR(255),
 	source_hostname VARCHAR(255),
 	source_ip VARCHAR(255),
@@ -32,5 +19,8 @@ CREATE TABLE firewall_rules(
 	description VARCHAR ( 1000 ),
 	validity VARCHAR ( 100 ),
 	till_date Date( 100 ),
-	created_date TIMESTAMP
+	created_date TIMESTAMP,
+	CONSTRAINT fk_request
+      FOREIGN KEY(request_id) 
+	  REFERENCES firewall_request(request_id)
 );

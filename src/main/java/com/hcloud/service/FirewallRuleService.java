@@ -9,6 +9,10 @@ public interface FirewallRuleService {
 
 	FirewallRule save(FirewallRule firewallRule);
 
-
 	List<FirewallRule> getAllFirewallRules();
+	
+	void updateFirewallRules(long requestId);
+	
+	
+	List<FirewallRule> getPendingFirewallRules();
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hcloud.model.FirewallRule;
 import com.hcloud.repository.FirewallRuleRepository;
 import com.hcloud.service.FirewallRuleService;
@@ -15,6 +14,7 @@ public class FirewallRuleServiceImpl implements FirewallRuleService{
 
 	@Autowired
 	private FirewallRuleRepository firewallRuleRepository;
+	
 	
 	@Override
 	public FirewallRule save(FirewallRule firewallRule) {
@@ -32,4 +32,15 @@ public class FirewallRuleServiceImpl implements FirewallRuleService{
             return new ArrayList<FirewallRule>();
         }
     }
+
+	
+	@Override
+	public void updateFirewallRules(long requestId) {
+		firewallRuleRepository.updateFirewallRules(requestId);
+	}
+
+	@Override
+	public List<FirewallRule> getPendingFirewallRules() {
+		return firewallRuleRepository.getPendingFirewallRules();
+	}
 }
