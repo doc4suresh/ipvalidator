@@ -22,4 +22,7 @@ public interface FirewallRuleRepository extends JpaRepository<FirewallRule, Long
     @Query(value = "Select * from firewall_rule f where request_id is null",
             nativeQuery = true)
 	List<FirewallRule> getPendingFirewallRules();
+    
+    
+    
 }
