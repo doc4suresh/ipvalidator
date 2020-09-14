@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import com.hcloud.model.FirewallRequest;
 import com.hcloud.model.FirewallRule;
@@ -27,8 +28,6 @@ public class FirewallController {
 	@Autowired
 	private FirewallRequestService firewallRequestService;
 	
-	@Autowired
-	private ReshmaService reshmaService;
 	
 	@PostMapping(value = "/addFirewallRule")
 	public String addFirewallRule(@ModelAttribute("firewall") FirewallRule firewallRule, HttpServletRequest request) {
@@ -37,22 +36,15 @@ public class FirewallController {
 		if(firewallRule.getValidity().equals("Permanent")) {
 			firewallRule.setTillDate(null);
 		}
-		System.out.println("++++++++++++++++++++++++++++++ SOURCE ENVIRONMENTS ++++++++++++++++++++++++++++++++++");
-		List<Reshma> res = reshmaService.getReshmaIPs(firewallRule.getSourceIp());
-		
-		for (Reshma r : res) {
-			System.out.println("DC : "+r.getDcLocation()+"Cluster : "+r.getClusterName()+" App Type : "+r.getAppType()+" App Environment: "+r.getAppEnvironment());
-		}
-		
-		System.out.println("+++++++++++++++++++++++++++++++ DESTINATION ENVIRONMENTS +++++++++++++++++++++++++++++++++");
-List<Reshma> res2 = reshmaService.getReshmaIPs(firewallRule.getDesIp());
-		
-		for (Reshma r : res2) {
-			System.out.println("DC : "+r.getDcLocation()+"Cluster : "+r.getClusterName()+" App Type : "+r.getAppType()+" App Environment: "+r.getAppEnvironment());
-		}
 		
 		
+		String apiuri="http://localhost:8081/getRemarks?sourceIP="+firewallRule.getSourceIp()+"&destinationIP="+firewallRule.getDesIp();
+		RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(apiuri, String.class);
+	    
+	    System.out.println("Main service : "+result);
 		
+	    firewallRule.setRemarks(result);
 		
 		
 		firewallRuleService.save(firewallRule);
