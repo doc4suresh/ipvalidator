@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-
 import com.hcloud.model.FirewallRequest;
 import com.hcloud.model.FirewallRule;
 import com.hcloud.service.FirewallRequestService;
@@ -53,12 +53,38 @@ public class FirewallController {
 	
 	}
 	
+	@GetMapping("/editFirewallRule")
+	public String editFirewallRule(@RequestParam("id") Long sn, Model model) {
+		FirewallRule fr = firewallRuleService.getBySN(sn);
+		model.addAttribute("FirewallRule", fr);
+		return "redirect:/Request";
+	}
+	
+	@RequestMapping(value = "/editFirewallRule", method = RequestMethod.POST)
+	public String editFirewallRule(@ModelAttribute("FirewallRule") FirewallRule firewallRule, HttpServletRequest request) {
+
+		if(firewallRule.getValidity().equals("Permanent")) {
+			firewallRule.setTillDate(null);
+		}
+		
+		String apiuri="http://localhost:8081/getRemarks?sourceIP="+firewallRule.getSourceIp()+"&destinationIP="+firewallRule.getDesIp();
+		RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(apiuri, String.class);
+	    
+	    System.out.println("Main service : "+result);
+		
+	    firewallRule.setRemarks(result);
+		
+		
+		firewallRuleService.save(firewallRule);
+		
+		return "redirect:/Request";
+	}
+	
 	@GetMapping("/deleteFirewallRule")
 	public String deleteFirewallRule(@RequestParam("id") Long id) {
-
 		firewallRuleService.deleteById(id);
 		return "redirect:/Request";
-		
 	}
 	
 	

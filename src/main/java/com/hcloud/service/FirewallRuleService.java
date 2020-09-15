@@ -9,6 +9,8 @@ public interface FirewallRuleService {
 
 	FirewallRule save(FirewallRule firewallRule);
 	
+	FirewallRule getBySN(long sn);
+	
 	void deleteById(long id);
 
 	List<FirewallRule> getAllFirewallRules();
