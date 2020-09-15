@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.hcloud.model.FirewallRequest;
 import com.hcloud.model.FirewallRule;
-import com.hcloud.model.Reshma;
 import com.hcloud.service.FirewallRequestService;
 import com.hcloud.service.FirewallRuleService;
-import com.hcloud.service.ReshmaService;
 
 @Controller
 public class FirewallController {
@@ -52,6 +52,15 @@ public class FirewallController {
 		return "redirect:/Request";
 	
 	}
+	
+	@GetMapping("/deleteFirewallRule")
+	public String deleteFirewallRule(@RequestParam("id") Long id) {
+
+		firewallRuleService.deleteById(id);
+		return "redirect:/Request";
+		
+	}
+	
 	
 	@RequestMapping(value = "/Request")
 	public String listRequest(Model model) throws IOException {

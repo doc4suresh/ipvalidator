@@ -22,6 +22,11 @@ public class FirewallRuleServiceImpl implements FirewallRuleService{
 	}
 	
 	@Override
+	public void deleteById(long id) {
+		firewallRuleRepository.deleteById(id);
+	}
+	
+	@Override
 	public List<FirewallRule> getAllFirewallRules()
     {
         List<FirewallRule> result = (List<FirewallRule>) firewallRuleRepository.findAll();
